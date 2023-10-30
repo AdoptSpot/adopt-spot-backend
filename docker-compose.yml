@@ -1,9 +1,6 @@
-version: "3.8"
-
 services:
   mongodb:
-    image: mongo:5.0.2
-    restart: unless-stopped
+    image: mongo:7.0.2
     env_file: ./.env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
@@ -16,7 +13,6 @@ services:
     depends_on:
       - mongodb
     build: .
-    restart: unless-stopped
     env_file: ./.env
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
@@ -26,8 +22,7 @@ services:
       - DB_PASSWORD=$MONGODB_PASSWORD
       - DB_NAME=$MONGODB_DATABASE
       - DB_PORT=$MONGODB_DOCKER_PORT
-    stdin_open: true
-    tty: true
-
+    volumes:
+      - .:/adopt-spot-backend
 volumes:
   db:

@@ -1,7 +1,10 @@
-FROM node:14
+FROM node:20.9.0
 
-WORKDIR .
-COPY package.json .
-RUN npm install
+WORKDIR /adopt-spot-backend
 COPY . .
-CMD npm start
+
+ENV PATH=/adopt-spot-backendnode_modules/.bin:$PATH
+
+RUN npm install && npm cache clean --force
+
+CMD npm run dev:docker
