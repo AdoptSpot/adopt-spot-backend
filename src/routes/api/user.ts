@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs";
 import config from "config";
 import { Router, Response } from "express";
 import { check, validationResult } from "express-validator";
-import gravatar from "gravatar";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
 
@@ -46,14 +45,6 @@ router.post(
         });
       }
 
-      const options: gravatar.Options = {
-        s: "200",
-        r: "pg",
-        d: "mm",
-      };
-
-      const avatar = gravatar.url(email, options);
-
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(password, salt);
 
@@ -61,7 +52,6 @@ router.post(
       const userFields: TUser = {
         email,
         password: hashed,
-        avatar,
       };
 
       user = new User(userFields);

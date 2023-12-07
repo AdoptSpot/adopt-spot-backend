@@ -1,10 +1,13 @@
 import bodyParser from "body-parser";
 import express from "express";
 
-import connectDB from "../config/database";
+import connectDB from '../config/database';
 import auth from "./routes/api/auth";
 import user from "./routes/api/user";
 import profile from "./routes/api/profile";
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerOutput from './swagger_output.json';
 
 const app = express();
 
@@ -12,7 +15,7 @@ const app = express();
 connectDB();
 
 // Express configuration
-app.set("port", process.env.NODE_DOCKER_PORT || 8080);
+app.set("port", process.env.NODE_DOCKER_PORT || 6868);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -26,6 +29,8 @@ app.get("/", (_req, res) => {
 app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/profile", profile);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 
 const port = app.get("port");
 const server = app.listen(port, () =>

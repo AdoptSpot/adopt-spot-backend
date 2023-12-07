@@ -6,11 +6,12 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "resolveJsonModule": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/swagger-output.json"],
 }

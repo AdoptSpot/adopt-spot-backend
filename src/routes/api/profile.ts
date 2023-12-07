@@ -16,7 +16,7 @@ router.get("/me", auth, async (req: Request, res: Response) => {
   try {
     const profile: IProfile = await Profile.findOne({
       user: req.userId,
-    }).populate("user", ["avatar", "email"]);
+    }).populate("user", ["email"]);
     if (!profile) {
       return res.status(HttpStatusCodes.BAD_REQUEST).json({
         errors: [
@@ -107,7 +107,6 @@ router.post(
 router.get("/", async (_req: Request, res: Response) => {
   try {
     const profiles: IProfile[] = await Profile.find().populate("user", [
-      "avatar",
       "email",
     ]);
     res.json(profiles);
@@ -124,7 +123,7 @@ router.get("/user/:userId", async (req: Request, res: Response) => {
   try {
     const profile: IProfile = await Profile.findOne({
       user: req.params.userId,
-    }).populate("user", ["avatar", "email"]);
+    }).populate("user", ["email"]);
 
     if (!profile)
       return res
