@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb://root:123456@localhost:7017/adopt-spot-db?authSource=admin",
+  "mongoURI": "mongodb://root:123456@mongodb:27017/adopt-spot-db?authSource=admin",
   "jwtSecret": "jwtSecretToken",
   "jwtExpiration": 360000
 }
