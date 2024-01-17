@@ -10,7 +10,13 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerOutput from './swagger_output.json';
 
 const app = express();
-app.use(cors({ origin: ["http://localhost:4300", "adoptspot.loc:4300"]}));
+
+// CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "adoptspot.loc:4300");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // Connect to MongoDB
 connectDB();
