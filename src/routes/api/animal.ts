@@ -166,4 +166,19 @@ router.get("/", async (_req: Request, res: Response) => {
     }
 });
 
+// @route   GET api/animals/shelter/:shelterId
+// @desc    Get all animals by shelterId
+// @access  Public
+router.get("/shelter/:shelterId", async (req: Request, res: Response) => {
+    try {
+        const animals: IAnimal[] = await Animal.find({
+            shelter: req.params.shelterId,
+        });
+        res.json(animals);
+    } catch (err) {
+        console.error(err.message);
+        res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+    }
+});
+
 export default router;
