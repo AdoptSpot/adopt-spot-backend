@@ -4,9 +4,9 @@ import HttpStatusCodes from "http-status-codes";
 
 import auth from "../../middleware/auth";
 import Animal from "../../models/Animal";
-import animal, {IAnimal, TAnimal} from "../../models/Animal";
+import {IAnimal, TAnimal} from "../../models/Animal";
 import Request from "../../types/Request";
-import Shelter, {IShelter} from "../../models/Shelter";
+import Shelter from "../../models/Shelter";
 
 const router: Router = Router();
 
@@ -22,7 +22,7 @@ router.post(
         check("type", "Type is required").not().isEmpty(),
         check("age", "Age is required").not().isEmpty(),
         check("description", "Description is required").not().isEmpty(),
-        check("shelterId", "Shelter is required").not().isEmpty(),
+        check("shelterId", "Shelter is required"),
     ],
     async (req: Request, res: Response) => {
         const errors = validationResult(req);
@@ -41,15 +41,24 @@ router.post(
             type,
             age,
             description,
-            shelter: shelterId,
             date: new Date(),
         };
 
-        try {
-            animalFields.shelter = await Shelter.findOne({_id: shelterId});
+        if (shelterId) {
+            try {
+                animalFields.shelter = await Shelter.findOne({_id: shelterId});
+            } catch (err) {
+                console.error(err.message);
+                res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+            }
+        }
 
-            let animal = new Animal(animalFields);
+        try {
+            let animal: IAnimal = new Animal(animalFields);
             await animal.save();
+
+            console.log(await Animal.findOne({_id: animal._id}));
+
 
             res.json(animal);
         } catch (err) {

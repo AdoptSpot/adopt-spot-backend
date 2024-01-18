@@ -18,7 +18,7 @@ export type TAnimal = {
     breed: string;
     age: number;
     description: string;
-    shelter: IShelter["_id"]
+    shelter?: IShelter["_id"]
     date: Date;
 };
 
