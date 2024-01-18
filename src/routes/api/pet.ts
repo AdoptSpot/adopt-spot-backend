@@ -162,6 +162,11 @@ router.delete("/:petId", auth, async (req: Request, res: Response) => {
 router.get("/", async (_req: Request, res: Response) => {
     try {
         const pets: IPet[] = await Pet.find();
+
+        for (const pet of pets) {
+            pet.shelter = await Shelter.findOne({_id: pet.shelter});
+        }
+
         res.json(pets);
     } catch (err) {
         console.error(err.message);
@@ -177,6 +182,11 @@ router.get("/shelter/:shelterId", async (req: Request, res: Response) => {
         const pets: IPet[] = await Pet.find({
             shelter: req.params.shelterId,
         });
+
+        for (const pet of pets) {
+            pet.shelter = await Shelter.findOne({_id: pet.shelter});
+        }
+
         res.json(pets);
     } catch (err) {
         console.error(err.message);
