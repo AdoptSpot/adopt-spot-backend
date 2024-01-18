@@ -2,7 +2,7 @@ import { Document, model, Schema } from "mongoose";
 import { IShelter } from "./Shelter";
 
 /**
- * Type to model the Animal Schema for TypeScript.
+ * Type to model the Pet Schema for TypeScript.
  * @param name:string
  * @param type:string
  * @param breed:string
@@ -12,7 +12,7 @@ import { IShelter } from "./Shelter";
  * @param date:Date
  */
 
-export type TAnimal = {
+export type TPet = {
     name: string;
     type: string;
     breed: string;
@@ -26,7 +26,7 @@ export type TAnimal = {
  * Mongoose Document based on TProfile for TypeScript.
  * https://mongoosejs.com/docs/documents.html
  *
- * TAnimal
+ * TPet
  * @param name:string
  * @param type:string
  * @param breed:string
@@ -36,9 +36,9 @@ export type TAnimal = {
  * @param date:Date
  */
 
-export interface IAnimal extends TAnimal, Document {}
+export interface IPet extends TPet, Document {}
 
-const animalSchema: Schema = new Schema({
+const petSchema: Schema = new Schema({
     name: {
         type: String,
         required: true,
@@ -73,7 +73,7 @@ const animalSchema: Schema = new Schema({
  * Mongoose Model based on TProfile for TypeScript.
  * https://mongoosejs.com/docs/models.html
  *
- * TAnimal
+ * TPet
  * @param name:string
  * @param type:string
  * @param breed:string
@@ -83,6 +83,6 @@ const animalSchema: Schema = new Schema({
  * @param date:Date
  */
 
-const Animal = model<IAnimal>("Animal", animalSchema);
+const Pet = model<IPet>("Pet", petSchema);
 
-export default Animal;
+export default Pet;

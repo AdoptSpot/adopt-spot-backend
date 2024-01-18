@@ -1,17 +1,17 @@
-import {Response, Router} from "express";
-import {check, validationResult} from "express-validator";
+import { Response, Router } from "express";
+import { check, validationResult } from "express-validator";
 import HttpStatusCodes from "http-status-codes";
 
 import auth from "../../middleware/auth";
-import Animal from "../../models/Animal";
-import {IAnimal, TAnimal} from "../../models/Animal";
+import Pet from "../../models/Pet";
+import { IPet, TPet } from "../../models/Pet";
 import Request from "../../types/Request";
 import Shelter from "../../models/Shelter";
 
 const router: Router = Router();
 
-// @route   POST api/animal
-// @desc    Create an animal
+// @route   POST api/pet
+// @desc    Create an pet
 // @access  Private
 router.post(
     "/",
@@ -34,8 +34,8 @@ router.post(
 
         const { name, breed, type, age, description, shelterId } = req.body;
 
-        // Build animal object based on TAnimal
-        const animalFields: TAnimal = {
+        // Build pet object based on TPet
+        const petFields: TPet = {
             name,
             breed,
             type,
@@ -46,7 +46,7 @@ router.post(
 
         if (shelterId) {
             try {
-                animalFields.shelter = await Shelter.findOne({_id: shelterId});
+                petFields.shelter = await Shelter.findOne({_id: shelterId});
             } catch (err) {
                 console.error(err.message);
                 res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
@@ -54,13 +54,13 @@ router.post(
         }
 
         try {
-            let animal: IAnimal = new Animal(animalFields);
-            await animal.save();
+            let pet: IPet = new Pet(petFields);
+            await pet.save();
 
-            console.log(await Animal.findOne({_id: animal._id}));
+            console.log(await Pet.findOne({_id: pet._id}));
 
 
-            res.json(animal);
+            res.json(pet);
         } catch (err) {
             console.error(err.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
@@ -68,11 +68,11 @@ router.post(
     }
 );
 
-// @route   PATCH api/animal/:animalId
-// @desc    Update an animal
+// @route   PATCH api/pet/:petId
+// @desc    Update an pet
 // @access  Private
 router.patch(
-    "/:animalId",
+    "/:petId",
     [
         auth,
         check("name", "Name is required"),
@@ -82,29 +82,30 @@ router.patch(
     ],
     async (req: Request, res: Response) => {
         const { name, breed, age, description } = req.body;
-        const { animalId } = req.params;
+        const { petId } = req.params;
 
         try {
-            let animal: IAnimal = await Animal.findOne({ _id: animalId });
+            let pet: IPet = await Pet.findOne({ _id: petId });
 
-            if (!animal) {
+            if (!pet) {
                 return res.status(HttpStatusCodes.BAD_REQUEST).json({
                     errors: [
                         {
-                            msg: "Animal does not exist",
+                            msg: "Pet does not exist",
                         },
                     ],
                 });
             }
 
-            animal.name = name ?? animal.name;
-            animal.breed = breed ?? animal.breed;
-            animal.age = age ?? animal.age;
-            animal.description = description ?? animal.description;
+            pet.name = name ?? pet.name;
+            pet.breed = breed ?? pet.breed;
+            pet.age = age ?? pet.age;
+            pet.description = description ?? pet.description;
+            pet.shelter = await Shelter.findOne({ _id: pet.shelter });
 
-            await animal.save();
+            await pet.save();
 
-            res.json(animal);
+            res.json(pet);
         } catch (err) {
             console.error(err.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
@@ -112,69 +113,71 @@ router.patch(
     }
 );
 
-// @route   GET api/animal/:animalId
-// @desc    Get animal by animalId
+// @route   GET api/pet/:petId
+// @desc    Get pet by petId
 // @access  Public
-router.get("/:animalId", async (req: Request, res: Response) => {
+router.get("/:petId", async (req: Request, res: Response) => {
     try {
-        const animal: IAnimal = await Animal.findOne({
-            _id: req.params.animalId,
+        const pet: IPet = await Pet.findOne({
+            _id: req.params.petId,
         });
 
-        if (!animal)
+        if (!pet)
             return res
                 .status(HttpStatusCodes.BAD_REQUEST)
-                .json({ msg: "Animal not found" });
+                .json({ msg: "Pet not found" });
 
-        res.json(animal);
+        pet.shelter = await Shelter.findOne({_id: pet.shelter});
+
+        res.json(pet);
     } catch (err) {
         console.error(err.message);
         if (err.kind === "ObjectId") {
             return res
                 .status(HttpStatusCodes.BAD_REQUEST)
-                .json({ msg: "Animal not found" });
+                .json({ msg: "Pet not found" });
         }
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
     }
 });
 
-// @route   DELETE api/animal/:animalId
-// @desc    Delete animal by animalId
+// @route   DELETE api/pet/:petId
+// @desc    Delete pet by petId
 // @access  Private
-router.delete("/:animalId", auth, async (req: Request, res: Response) => {
+router.delete("/:petId", auth, async (req: Request, res: Response) => {
     try {
-        // Remove animal
-        await Animal.findOneAndRemove({ _id: req.params.animalId });
+        // Remove pet
+        await Pet.findOneAndRemove({ _id: req.params.petId });
 
-        res.json({ msg: "Animal removed" });
+        res.json({ msg: "Pet removed" });
     } catch (err) {
         console.error(err.message);
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
     }
 });
 
-// @route   GET api/animal/all
-// @desc    Get all animals
+// @route   GET api/pet/all
+// @desc    Get all pets
 // @access  Public
 router.get("/", async (_req: Request, res: Response) => {
     try {
-        const animals: IAnimal[] = await Animal.find();
-        res.json(animals);
+        const pets: IPet[] = await Pet.find();
+        res.json(pets);
     } catch (err) {
         console.error(err.message);
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
     }
 });
 
-// @route   GET api/animals/shelter/:shelterId
-// @desc    Get all animals by shelterId
+// @route   GET api/pets/shelter/:shelterId
+// @desc    Get all pets by shelterId
 // @access  Public
 router.get("/shelter/:shelterId", async (req: Request, res: Response) => {
     try {
-        const animals: IAnimal[] = await Animal.find({
+        const pets: IPet[] = await Pet.find({
             shelter: req.params.shelterId,
         });
-        res.json(animals);
+        res.json(pets);
     } catch (err) {
         console.error(err.message);
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");

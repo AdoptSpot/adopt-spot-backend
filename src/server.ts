@@ -5,10 +5,11 @@ import cors from "cors";
 import connectDB from '../config/database';
 import auth from "./routes/api/auth";
 import user from "./routes/api/user";
-import animal from "./routes/api/animal";
+import pet from "./routes/api/pet";
 import shelter from "./routes/api/shelter";
 
 import swaggerUi from 'swagger-ui-express';
+// import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerOutput from './swagger_output.json';
 
 const app = express();
@@ -33,7 +34,7 @@ app.get("/", (_req, res) => {
 
 app.use("/api/auth", auth);
 app.use("/api/user", user);
-app.use("/api/animals", animal);
+app.use("/api/pets", pet);
 app.use("/api/shelters", shelter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
