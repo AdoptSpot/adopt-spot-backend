@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Happy Paws Shelter",
+    "location": "123 Main Street, Cityville",
+    "contact_email": "happy.paws@example.com",
+    "contact_phone": "+1234567890"
+  },
+  {
+    "name": "Safe Haven Animal Rescue",
+    "location": "456 Oak Avenue, Townsville",
+    "contact_email": "safe.haven@example.com",
+    "contact_phone": "+9876543210"
+  },
+  {
+    "name": "Compassionate Care Shelter",
+    "location": "789 Pine Lane, Villagetown",
+    "contact_email": "care.shelter@example.com",
+    "contact_phone": "+1112233445"
+  },
+  {
+    "name": "Loving Hearts Pet Sanctuary",
+    "location": "321 Cedar Street, Hamlet City",
+    "contact_email": "loving.hearts@example.com",
+    "contact_phone": "+5556667777"
+  }
+]
