@@ -8,8 +8,9 @@ import user from "./routes/api/user";
 import pet from "./routes/api/pet";
 import shelter from "./routes/api/shelter";
 
+import populateDB from "./populateDB";
+
 import swaggerUi from 'swagger-ui-express';
-// import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerOutput from './swagger_output.json';
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(cors());
 
 // Connect to MongoDB
 connectDB();
+populateDB();
 
 // Express configuration
 app.set("port", process.env.NODE_DOCKER_PORT || 6868);

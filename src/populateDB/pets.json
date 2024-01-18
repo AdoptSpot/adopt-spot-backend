@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Buddy",
+    "type": "Dog",
+    "breed": "Golden Retriever",
+    "age": 2,
+    "description": "Friendly and playful, loves to fetch."
+  },
+  {
+    "name": "Whiskers",
+    "type": "Cat",
+    "breed": "Siamese",
+    "age": 3,
+    "description": "Elegant and affectionate, enjoys sunbathing."
+  },
+  {
+    "name": "Rocky",
+    "type": "Dog",
+    "breed": "Boxer",
+    "age": 4,
+    "description": "Energetic and loyal, great for outdoor activities."
+  },
+  {
+    "name": "Mittens",
+    "type": "Cat",
+    "breed": "Persian",
+    "age": 5,
+    "description": "Gentle and enjoys cuddling, has a luxurious coat."
+  },
+  {
+    "name": "Charlie",
+    "type": "Dog",
+    "breed": "Labrador Retriever",
+    "age": 3,
+    "description": "Loves water and long walks, great family dog."
+  },
+  {
+    "name": "Luna",
+    "type": "Cat",
+    "breed": "Maine Coon",
+    "age": 2,
+    "description": "Large and sociable, known for tufted ears and bushy tail."
+  },
+  {
+    "name": "Max",
+    "type": "Dog",
+    "breed": "German Shepherd",
+    "age": 4,
+    "description": "Intelligent and protective, excellent guard dog."
+  },
+  {
+    "name": "Oreo",
+    "type": "Cat",
+    "breed": "Domestic Shorthair",
+    "age": 1,
+    "description": "Playful and curious, black and white coat."
+  },
+  {
+    "name": "Daisy",
+    "type": "Dog",
+    "breed": "Beagle",
+    "age": 2,
+    "description": "Friendly and good with kids, known for its keen sense of smell."
+  },
+  {
+    "name": "Milo",
+    "type": "Cat",
+    "breed": "Ragdoll",
+    "age": 3,
+    "description": "Relaxed and affectionate, loves being held like a baby."
+  }
+]

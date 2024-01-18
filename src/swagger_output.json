@@ -12,30 +12,61 @@
     }
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/auth/": {
       "get": {
-        "description": "",
+        "security": [{
+            "apiKeyAuth": []
+        }],
+        "description": "Get current authenticated user",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "_id": "5f9e3b7b9c9d440000d9d4b0",
+                  "email": "email@adopt.local",
+                  "date": "2020-11-01T18:00:00.000Z"
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "description": "",
+        "description": "Login user",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "token": "JWT_TOKEN"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -45,12 +76,16 @@
                 "type": "object",
                 "properties": {
                   "email": {
-                    "example": "any"
+                    "example": "string"
                   },
                   "password": {
-                    "example": "any"
+                    "example": "string"
                   }
                 }
+              },
+              "example": {
+                "email": "email@adopt.local",
+                "password": "123456"
               }
             }
           }
@@ -59,10 +94,25 @@
     },
     "/api/user/": {
       "post": {
-        "description": "",
+        "description": "Register user",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "token": "JWT_TOKEN"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -72,24 +122,18 @@
                 "type": "object",
                 "properties": {
                   "email": {
-                    "example": "any"
+                    "example": "string"
                   },
                   "password": {
-                    "example": "any"
+                    "example": "string"
                   }
                 }
+              },
+              "example": {
+                "email": "email@adopt.local",
+                "password": "123456"
               }
             }
-          }
-        }
-      }
-    },
-    "/api/profile/me": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }

@@ -15,15 +15,16 @@ const doc = {
     ],
     components: {
         securitySchemes: {
-            bearerAuth: {
-                type: 'http',
-                scheme: 'bearer',
+            apiKeyAuth: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'x-auth-token',
             }
         }
     },
 };
 
 const outputFile = './swagger_output.json';
-const endpointsFiles = ['./src/server.ts'];
+const endpointsFiles = ['./src/routes/api/*.ts'];
 
 swaggerAutogen({openapi: '3.0.0'})(outputFile, endpointsFiles, doc);
