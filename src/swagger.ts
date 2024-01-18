@@ -15,16 +15,24 @@ const doc = {
     ],
     components: {
         securitySchemes: {
-            apiKeyAuth: {
-                type: 'apiKey',
-                in: 'header',
-                name: 'x-auth-token',
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT'
             }
         }
     },
+    definitions: {
+        Login: {
+            email: 'email@adoptspot.local',
+            password: 'password'
+        }
+    }
 };
 
 const outputFile = './swagger_output.json';
-const endpointsFiles = ['./src/routes/api/*.ts'];
+const endpointsFiles = ['./src/server.ts'];
+
+console.log("Generating Swagger Documentation...");
 
 swaggerAutogen({openapi: '3.0.0'})(outputFile, endpointsFiles, doc);

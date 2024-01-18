@@ -12,80 +12,43 @@
     }
   ],
   "paths": {
-    "/api/auth/": {
+    "/": {
       "get": {
-        "security": [{
-            "apiKeyAuth": []
-        }],
-        "description": "Get current authenticated user",
+        "description": "",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "date": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "_id": "5f9e3b7b9c9d440000d9d4b0",
-                  "email": "email@adopt.local",
-                  "date": "2020-11-01T18:00:00.000Z"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
-      },
-      "post": {
-        "description": "Login user",
+      }
+    },
+    "/api/auth/": {
+      "get": {
+        "description": "",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "token": "JWT_TOKEN"
-                }
-              }
-            }
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "example": "string"
-                  },
-                  "password": {
-                    "example": "string"
-                  }
-                }
-              },
-              "example": {
-                "email": "email@adopt.local",
-                "password": "123456"
+                "$ref": "#/components/schemas/Login"
               }
             }
           }
@@ -94,25 +57,10 @@
     },
     "/api/user/": {
       "post": {
-        "description": "Register user",
+        "description": "",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "token": "JWT_TOKEN"
-                }
-              }
-            }
+            "description": "OK"
           }
         },
         "requestBody": {
@@ -122,23 +70,19 @@
                 "type": "object",
                 "properties": {
                   "email": {
-                    "example": "string"
+                    "example": "any"
                   },
                   "password": {
-                    "example": "string"
+                    "example": "any"
                   }
                 }
-              },
-              "example": {
-                "email": "email@adopt.local",
-                "password": "123456"
               }
             }
           }
         }
       }
     },
-    "/api/profile/": {
+    "/api/pets/": {
       "post": {
         "description": "",
         "responses": {
@@ -146,19 +90,33 @@
             "description": "OK"
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "firstName": {
+                  "name": {
                     "example": "any"
                   },
-                  "lastName": {
+                  "breed": {
                     "example": "any"
                   },
-                  "username": {
+                  "type": {
+                    "example": "any"
+                  },
+                  "age": {
+                    "example": "any"
+                  },
+                  "description": {
+                    "example": "any"
+                  },
+                  "shelterId": {
                     "example": "any"
                   }
                 }
@@ -169,6 +127,72 @@
       },
       "get": {
         "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/pets/{petId}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "breed": {
+                    "example": "any"
+                  },
+                  "age": {
+                    "example": "any"
+                  },
+                  "description": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -177,19 +201,34 @@
       },
       "delete": {
         "description": "",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/api/profile/user/{userId}": {
+    "/api/pets/shelter/{shelterId}": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "userId",
+            "name": "shelterId",
             "in": "path",
             "required": true,
             "schema": {
@@ -203,13 +242,159 @@
           }
         }
       }
+    },
+    "/api/shelters/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "location": {
+                    "example": "any"
+                  },
+                  "contact_email": {
+                    "example": "any"
+                  },
+                  "contact_phone": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/shelters/{shelterId}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "shelterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "location": {
+                    "example": "any"
+                  },
+                  "contact_email": {
+                    "example": "any"
+                  },
+                  "contact_phone": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "shelterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "shelterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "email@adoptspot.local"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        }
       }
     }
   }

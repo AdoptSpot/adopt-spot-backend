@@ -16,6 +16,9 @@ const router: Router = Router();
 // @desc    Get authenticated user given the token
 // @access  Private
 router.get("/", auth, async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+      "bearerAuth": []
+  }] */
   try {
     const user: IUser = await User.findById(req.userId).select("-password");
     res.json(user);
@@ -34,6 +37,17 @@ router.post(
     check("email", "Please include a valid email").isEmail(),
     check("password", "Password is required").exists(),
   ],
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/definitions/Login"
+                    }
+                }
+            }
+        }
+    */
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

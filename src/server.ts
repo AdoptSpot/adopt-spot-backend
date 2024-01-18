@@ -13,6 +13,8 @@ import populateDB from "./populateDB";
 import swaggerUi from 'swagger-ui-express';
 import swaggerOutput from './swagger_output.json';
 
+import './swagger';
+
 const app = express();
 
 // CORS

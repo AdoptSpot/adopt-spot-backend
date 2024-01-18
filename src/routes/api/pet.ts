@@ -25,6 +25,9 @@ router.post(
         check("shelterId", "Shelter is required"),
     ],
     async (req: Request, res: Response) => {
+        /* #swagger.security = [{
+            "bearerAuth": []
+        }] */
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res
@@ -81,6 +84,9 @@ router.patch(
         check("description", "Description is required"),
     ],
     async (req: Request, res: Response) => {
+        /* #swagger.security = [{
+    "bearerAuth": []
+}] */
         const { name, breed, age, description } = req.body;
         const { petId } = req.params;
 
@@ -145,6 +151,9 @@ router.get("/:petId", async (req: Request, res: Response) => {
 // @desc    Delete pet by petId
 // @access  Private
 router.delete("/:petId", auth, async (req: Request, res: Response) => {
+    /* #swagger.security = [{
+    "bearerAuth": []
+}] */
     try {
         // Remove pet
         await Pet.findOneAndRemove({ _id: req.params.petId });

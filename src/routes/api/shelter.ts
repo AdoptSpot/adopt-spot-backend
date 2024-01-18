@@ -63,6 +63,9 @@ router.patch(
         check("contact_phone", "Contact phone is required"),
     ],
     async (req: Request, res: Response) => {
+        /* #swagger.security = [{
+"bearerAuth": []
+}] */
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res
@@ -139,6 +142,9 @@ router.get("/", async (_req: Request, res: Response) => {
 // @desc    Delete a shelter
 // @access  Private
 router.delete("/:shelterId", auth, async (req: Request, res: Response) => {
+    /* #swagger.security = [{
+"bearerAuth": []
+}] */
     try {
         // Remove shelter
         await Shelter.findOneAndRemove({ _id: req.params.shelterId });
